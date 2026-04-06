@@ -248,6 +248,26 @@ function defaultProjectWorkspaceIdForProject(project: { workspaces?: Array<{ id:
     ?? "";
 }
 
+function isProjectWorkspaceIdValidForProject(
+  workspaceId: string | undefined,
+  project: { workspaces?: Array<{ id: string }>; executionWorkspacePolicy?: { defaultProjectWorkspaceId?: string | null } | null } | null | undefined,
+): boolean {
+  if (!workspaceId || !project) return false;
+  if (project.executionWorkspacePolicy?.defaultProjectWorkspaceId === workspaceId) return true;
+  return Boolean(project.workspaces?.some((w) => w.id === workspaceId));
+}
+
+/** Avoid draft.workspace from another project when defaults change the selected project (server rejects mismatched workspace). */
+function projectWorkspaceIdForDraftRestore(
+  draftWorkspaceId: string | undefined,
+  project: Parameters<typeof defaultProjectWorkspaceIdForProject>[0],
+): string {
+  if (draftWorkspaceId && isProjectWorkspaceIdValidForProject(draftWorkspaceId, project)) {
+    return draftWorkspaceId;
+  }
+  return defaultProjectWorkspaceIdForProject(project);
+}
+
 function defaultExecutionWorkspaceModeForProject(project: { executionWorkspacePolicy?: { enabled?: boolean; defaultMode?: string | null } | null } | null | undefined) {
   const defaultMode = project?.executionWorkspacePolicy?.enabled ? project.executionWorkspacePolicy.defaultMode : null;
   if (
@@ -539,7 +559,7 @@ export function NewIssueDialog() {
           : (draft.assigneeValue ?? draft.assigneeId ?? ""),
       );
       setProjectId(restoredProjectId);
-      setProjectWorkspaceId(draft.projectWorkspaceId ?? defaultProjectWorkspaceIdForProject(restoredProject));
+      setProjectWorkspaceId(projectWorkspaceIdForDraftRestore(draft.projectWorkspaceId, restoredProject));
       setAssigneeModelOverride(draft.assigneeModelOverride ?? "");
       setAssigneeThinkingEffort(draft.assigneeThinkingEffort ?? "");
       setAssigneeChrome(draft.assigneeChrome ?? false);

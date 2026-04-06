@@ -1,8 +1,8 @@
 {
   "id": "/",
-  "name": "Paperclip",
-  "short_name": "Paperclip",
-  "description": "AI-powered project management and agent coordination platform",
+  "name": "Tese.io Virtual Office",
+  "short_name": "Tese.io",
+  "description": "Tese.io virtual office — AI agent coordination and operations",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
@@ -11,17 +11,17 @@
   "background_color": "#18181b",
   "icons": [
     {
-      "src": "/android-chrome-192x192.png",
+      "src": "/tese-logo.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "/android-chrome-512x512.png",
+      "src": "/tese-logo.png",
       "sizes": "512x512",
       "type": "image/png"
     },
     {
-      "src": "/android-chrome-512x512.png",
+      "src": "/tese-logo.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "maskable"

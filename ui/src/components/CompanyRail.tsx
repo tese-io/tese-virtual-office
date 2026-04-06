@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { Paperclip, Plus } from "lucide-react";
+import { Plus } from "lucide-react";
 import { useQueries } from "@tanstack/react-query";
 import {
   DndContext,
@@ -269,9 +269,15 @@ export function CompanyRail() {
 
   return (
     <div className="flex flex-col items-center w-[72px] shrink-0 h-full bg-background border-r border-border">
-      {/* Paperclip icon - aligned with top sections (implied line, no visible border) */}
-      <div className="flex items-center justify-center h-12 w-full shrink-0">
-        <Paperclip className="h-5 w-5 text-foreground" />
+      {/* Product mark — Tese.io Virtual Office */}
+      <div className="flex items-center justify-center h-12 w-full shrink-0 px-1">
+        <img
+          src="/tese-logo.png"
+          alt="Tese.io"
+          className="h-7 w-7 object-contain"
+          width={28}
+          height={28}
+        />
       </div>
 
       {/* Company list */}
